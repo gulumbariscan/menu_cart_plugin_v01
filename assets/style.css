@@ -1,0 +1,465 @@
+/*html, body {
+     padding: 0;
+     margin: 0;
+     width: 100%;
+     height: 100%;
+}
+ * {
+     box-sizing: border-box;
+}
+ body {
+     text-align: center;
+     padding: 0;
+    /* font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+ h1 {
+     text-align: center;
+}
+ body {
+     display: -webkit-box;
+     display: -ms-flexbox;
+     display: flex;
+     -webkit-box-pack: center;
+     -ms-flex-pack: center;
+     justify-content: center;
+     -webkit-box-align: center;
+     -ms-flex-align: center;
+     align-items: center;
+     font-family: sans-serif;
+}
+ */
+/* Styling for the mini cart */
+body{
+    font-family: sans-serif;
+}
+a{
+    text-decoration: none;
+    color:inherit;
+}
+.cart-container {
+    position: relative;
+    margin: 20px;
+}
+
+/* Styling for the shopping cart icon */
+.icon-area {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.icon-area img {
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+}
+
+.mini-cart-count {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 10px;
+    text-align: center;
+}
+
+/* Styling for the mini cart container */
+.mini-cart-container {
+    position: absolute;
+    width: 320px;
+    z-index: 999;
+    border-radius: 4px;
+    box-shadow: 0px 5px 10px 0px rgba(51, 3, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility .2s, opacity .2s linear;
+    cursor: pointer;
+    text-align: center;
+    right: 0;
+    top: 35px;
+    background-color: white;
+}
+
+/* Show mini cart on hover */
+.cart-container:hover .mini-cart-container {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: .2s;
+}
+
+/* Styling for the header of the mini cart */
+.mini-cart-head {
+    font-weight: 700;
+    border-bottom: 1px solid #e6e6e6;
+    padding: 10px 0;
+    color: #333;
+}
+
+/* Styling for the list of products in the mini cart */
+.mini-cart-list {
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 45px;
+    max-height: 300px;
+    list-style: none outside;
+    margin-block-start: unset;
+    margin-block-end: unset;
+    padding-inline-start: 0;
+}
+
+/* Styling for individual product in the mini cart */
+.mini-cart-product {
+    padding: 12px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+}
+
+/* Styling for the delete button of a product */
+.product-delete {
+    box-shadow: 0px 5px 5px 0px rgba(25, 25, 25, 0.5);
+    border-radius: 50%;
+    line-height: 1;
+    position: relative;
+    font-weight: 700;
+    bottom: 40px;
+    left: 10px;
+}
+
+/* Styling for the product delete button on hover */
+.product-delete:hover {
+    background-color: #333;
+    color: white;
+}
+
+.product-delete a {
+    text-decoration: none;
+    width: 1em;
+    height: 1em;
+    display: block;
+}
+
+/* Styling for the main link of a product */
+.mini-cart-product .product-main {
+    text-decoration: none;
+    display: flex;
+    cursor: pointer;
+    color: inherit;
+    text-align: left;
+}
+
+/* Styling for the product image */
+.mini-cart-product .product-main img {
+    width: 80px;
+    height: 80px;
+    border-radius: 4px;
+    overflow-clip-margin: content-box;
+    overflow: clip;
+    margin-right: 12px;
+    object-fit: cover;
+    aspect-ratio: 1/1;
+}
+
+/* Styling for the inner details of a product */
+.mini-product-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Styling for the product name */
+.mini-product-name {
+    font-weight: 700;
+    font-size: 18px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    /*white-space: pre-wrap;*/
+    word-break: break-word;
+    color: #2a2a2a;
+}
+
+/* Styling for the product price and quantity */
+.mini-product-prc-qty {
+    color: #545454;
+}
+
+/* Styling for the product price */
+.prc {
+    font-weight: 600;
+}
+
+/* Styling for the mini cart subtotal */
+.mini-cart-subtotal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    gap: 5px;
+}
+
+.mini-cart-subtotal .subtotal-text {
+    font-weight: 600;
+}
+
+.mini-cart-subtotal .subtotal-amount {
+    font-size: 18px;
+}
+
+/* Styling for the buttons in the mini cart */
+.mini-cart-buttons {
+    display: flex;
+    position: relative;
+    z-index: 99;
+    border-radius: 4px;
+}
+
+.cart-buttons {
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    background-color: #333;
+}
+
+/* Styling for the go-to-cart button */
+.go-to-cart {
+    border-right: .5px solid #e6e6e6;
+}
+
+/* Styling for the go-to-checkout button */
+.go-to-checkout {
+    border-left: .5px solid #e6e6e6;
+}
+
+/* Styling for button hover effect */
+.go-to-cart:hover,
+.go-to-checkout:hover {
+    background-color: rgba(51, 51, 51, .5);
+}
+
+/* Styling for the arrow above the mini cart */
+.mini-cart-container:before {
+    content: "";
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 7.5px;
+    border-color: white;
+    position: absolute;
+    display: block;
+    top: -8px;
+    right: 10px;
+    transform: rotate(-45deg);
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Styling for the line under each product in the mini cart */
+.mini-cart-product::after {
+    content: "";
+    width: 80%;
+    height: 2px;
+    background: #e6e6e6;
+    position: absolute;
+    bottom: -2px;
+    left: 55%;
+    transform: translateX(-50%);
+}
+
+/*mobile-cart*/
+@media (max-width: 600px) {
+    .mini-cart-container{
+        display: none;
+    }
+        .mini-cart-product::after {
+            content: none;
+            /* Remove the line */
+        }
+}
+@media (min-width: 600px) {
+.mobile-cart-container{
+    display: none;
+}
+}
+.mobile-cart-container{
+    position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: #ccc;
+
+        box-sizing: border-box;
+        transition: right 0.3s ease-in-out;
+            outline: 0;
+                overflow: hidden;
+                z-index: 9876543210;
+}
+
+.mobile-cart-container.show {
+    right: 0;
+
+}
+.mobile-cart-list {
+    overflow-x: hidden;
+        overflow-y: auto;
+        max-height: 80vh;
+        /* Adjust the value as needed */
+        height: fit-content;
+        list-style: none outside;
+        margin-block-start: unset;
+        margin-block-end: unset;
+        padding-inline-start: 0;
+}
+
+.mobile-cart-buttons{
+    display: flex;
+        position: absolute;
+        z-index: 99;
+        border-radius: 4px;
+        bottom: 0;
+        width: 100%;
+        flex-direction: column;
+}
+.mobile-cart-subtotal{
+    bottom: 40px;
+        text-align: center;
+
+position: absolute;
+        width: 100%;
+}
+
+
+
+/* Add a border-bottom to create a line under each product */
+.mobile-cart-product {
+    padding: 12px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    border-bottom: 1px solid #e6e6e6;
+    /* Add a border instead of ::after */
+}
+.mobile-cart-product a .mobile-cart-image{
+    width: 70px;
+    height: 70px;
+}
+.close-mobile-cart{
+    background: transparent;
+        border: none;
+        right: 15px;
+        position: relative;
+        float: right;
+        width: 20px;
+        height: 20px;
+        font-weight: bold;
+}
+.mobile-cart-head{
+    font-weight: 700;
+        border-bottom: 1px solid #e6e6e6;
+        padding: 15px 10px;
+        color: #333;
+}
+.mobile-total-count{
+    font-weight: 900;
+}
+.mobile-cart-product .product-delete a{
+    text-align:center;
+    font-weight: 100;
+}
+.mobile-product-inner{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+}
+.mobile-cart-product .product-main{
+    width: 100%;
+}
+.mobile-product-inner-right{
+    padding:0 30px;
+}
+.mobile-cart-counter{
+    border:.5px solid #ededed;
+    border-radius:4px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 80px;
+}
+
+.mobile-cart-counter-minus,
+.mobile-cart-counter-count,
+.mobile-cart-counter-plus{
+    text-align: center;
+    width: 33%;
+}
+.mobile-cart-counter-minus{
+    border-right: .5px solid #ededed;
+}
+.mobile-cart-counter-plus {
+    border-left: .5px solid #ededed;
+}
+.continue-shopping{
+
+            color: #333;
+            text-decoration: none;
+            width: 100%;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            background-color:transparent;
+}
+#shoppingButton{
+    border:none;
+    background: transparent;
+}
+
+/* Add this to your existing CSS */
+
+.loading-spinner {
+    display: inline-block;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #333;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+    margin-left: 5px;
+    /* Adjust as needed */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
