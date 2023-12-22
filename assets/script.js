@@ -23,7 +23,7 @@ window.onload = () => {
     changeHref();
     window.addEventListener("resize", changeHref);
 
- 
+
 };
 
 
@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     /** */
-    document.querySelectorAll('.product-delete a').forEach(function (deleteLink) {
-        deleteLink.addEventListener('click', function (event) {
+    document.querySelectorAll('.product-delete a').forEach(function(deleteLink) {
+        deleteLink.addEventListener('click', function(event) {
             event.preventDefault();
 
             // Show loading spinner
@@ -57,20 +57,20 @@ document.addEventListener('DOMContentLoaded', function() {
             spinner.className = 'loading-spinner';
             event.target.appendChild(spinner);
 
-           // Get the cart item key
+            // Get the cart item key
             var cartItemKey = event.target.getAttribute('data-cart-item-key');
 
             // Send AJAX request to update cart item
             var xhr = new XMLHttpRequest();
             xhr.open('POST', myAjax.ajaxurl, true); // Use myAjax.ajaxurl
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.onload = function () {
+            xhr.onload = function() {
                 if (xhr.status === 200) {
                     // Parse the JSON response
                     var response = JSON.parse(xhr.responseText);
-                    
-var subtotalAmount = document.querySelector('.subtotal-amount');
-        subtotalAmount.innerHTML = response.total_amount;
+
+                    var subtotalAmount = document.querySelector('.subtotal-amount');
+                    subtotalAmount.innerHTML = response.total_amount;
                     // Update cart count and total
                     document.querySelector('.mini-cart-count').textContent = response.total_count;
                     document.querySelector('.mini-total-count').textContent = response.total_count;
